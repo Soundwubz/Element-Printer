@@ -1,13 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'lib-element-printer',
-  template: `
-    <p>
-      element-printer works!
-    </p>
-  `,
-  styles: []
+  selector: 'el-printer',
+  templateUrl: 'element-printer.component.html',
+  styleUrls: ['element-printer.component.scss'],
 })
 export class ElementPrinterComponent implements OnInit {
 

@@ -20,7 +20,8 @@
     ],
     "paths": {
       "element-printer": [
-        "dist/element-printer"
+        //"dist/element-printer"
+        "projects/element-printer/src/public_api"
       ],
       "element-printer/*": [
         "dist/element-printer/*"
