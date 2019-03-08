@@ -14,9 +14,11 @@ export class AppComponent implements AfterViewInit {
 
   title = 'Element Printer Demo';
 
+  print(value: any) {
+
+  }
+
   ngAfterViewInit() {
-    console.dir(this.renderer.selectRootElement('#toPrint', true));
-    console.dir(this.renderer.selectRootElement('#toPrint', true).outerHTML);
-    console.dir(this.renderer.selectRootElement('#toPrint', true).style);
+
   }
 }

@@ -11,6 +11,7 @@
     "package_el_print": "npm run build_el_print && npm run npm_pack_el_print",
     "publish": "npm run package_el_print && cd dist/element-printer && npm publish",
     "test": "ng test",
+    "test_demo": "npm run package_el_print && npm run test",
     "lint": "ng lint",
     "e2e": "ng e2e"
   },
