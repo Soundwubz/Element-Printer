@@ -1,9 +1,9 @@
 <mat-toolbar color="primary" class="toolbar">
   <h1 class="title">{{ title }}</h1>
-  <a mat-button class="npm-btn" href="https://www.npmjs.com/package/element-printer" target="_blank">Element-Printer v0.0.3</a>
+  <a mat-button class="npm-btn" href="https://www.npmjs.com/package/element-printer" target="_blank">Element-Printer v0.0.4</a>
 </mat-toolbar>
 
-<!-- <mat-card class="example-card">
+<mat-card class="example-card" id="toPrint">
   <mat-card-header>
     <div mat-card-avatar class="example-header-image"></div>
     <mat-card-title>Shiba Inu</mat-card-title>
@@ -21,9 +21,14 @@
     <button mat-button>LIKE</button>
     <button mat-button>SHARE</button>
   </mat-card-actions>
-</mat-card> -->
+</mat-card>
 
-<h1 class="test-header" id="toPrint">Test Element</h1>
+<!-- <header class="test-header" id="toPrint">
+  <h1>Test Element</h1>
+  <p>Another test boy</p>
+  <img src="https://material.angular.io/assets/img/examples/shiba2.jpg" style="width:200px; height:200px; border: 
+  solid 2px black;">
+</header> -->
 
 <el-printer containerToPrint="toPrint"></el-printer>
 
