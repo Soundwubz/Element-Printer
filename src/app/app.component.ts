@@ -14,10 +14,6 @@ export class AppComponent implements AfterViewInit {
 
   title = 'Element Printer Demo';
 
-  print(value: any) {
-
-  }
-
   ngAfterViewInit() {
 
   }

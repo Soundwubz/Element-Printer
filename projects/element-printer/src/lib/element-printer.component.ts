@@ -2,6 +2,7 @@ import { Component, OnInit, Output, EventEmitter, Input, Renderer2 } from '@angu
 import { style } from '@angular/animations';
 
 @Component({
+// tslint:disable-next-line: component-selector
   selector: 'el-printer',
   templateUrl: 'element-printer.component.html',
   styleUrls: ['element-printer.component.scss'],
@@ -13,6 +14,7 @@ export class ElementPrinterComponent implements OnInit {
   ) { }
 
   @Input() containerToPrint: string;
+  @Input() enableDebug = false;
 
   slice = Function.call.bind(Array.prototype.slice);
 
@@ -21,7 +23,6 @@ export class ElementPrinterComponent implements OnInit {
     const container = this.renderer.selectRootElement('#' + this.containerToPrint, true);
     const childElements = this.slice(container.children);
     const classes = [];
-    console.dir(container);
     // tslint:disable-next-line: deprecation
     this.slice(document.all).forEach(x => {
       if (container.contains(x)) { // gets each element within the container; use this to get the class names and styles
@@ -30,8 +31,11 @@ export class ElementPrinterComponent implements OnInit {
         });
       }
     });
-    console.log('classes: ');
-    console.dir(classes);
+    if (this.enableDebug) {
+      console.dir(container);
+      console.log('classes: ');
+      console.dir(classes);
+    }
     let styleText;
     this.slice(document.styleSheets).filter(filterSheets);
 
@@ -77,7 +81,6 @@ export class ElementPrinterComponent implements OnInit {
     if (styleText.includes('background-image')) {
       console.warn('Defined container has styles that utilizes a background-image. ' +
        'Unless your browser settings allow for you to print background images.');
-      console.dir(styleText.indexOf('background-image'));
     }
 
     // Creating Print Window
