@@ -17,14 +17,14 @@ export class ElementPrinterComponent implements OnInit {
   slice = Function.call.bind(Array.prototype.slice);
 
   print() {
-    let style: string;
     const sudo = this;
     const container = this.renderer.selectRootElement('#' + this.containerToPrint, true);
     const childElements = this.slice(container.children);
-    let classes = [];
+    const classes = [];
     console.dir(container);
+    // tslint:disable-next-line: deprecation
     this.slice(document.all).forEach(x => {
-      if (container.contains(x)){ // gets each element within the container; use this to get the class names and styles
+      if (container.contains(x)) { // gets each element within the container; use this to get the class names and styles
         x.classList.forEach(y => {
           classes.push(y);
         });
@@ -49,25 +49,35 @@ export class ElementPrinterComponent implements OnInit {
         classes.forEach(x => {
           if (item.selectorText.includes(x)) { // Go through classes and get styles;
             if (styleText !== undefined) {
-              styleText = styleText + item.cssText;
+              styleText = styleText + ' ' + item.cssText;
             } else {
               styleText = item.cssText;
             }
             return true;
-          } else { // check if children match selector text
+          } /* else { // check if children match selector text
             childElements.forEach(child => {
               if (item.selectorText.includes(child.className)) { // Go through classes and get styles;
-                styleText = styleText + item.cssText;
+                if (styleText !== undefined) {
+                  styleText = styleText + ' ' + item.cssText;
+                } else {
+                  styleText = item.cssText;
+                }
                 return true;
               } else {
                 return false;
               }
             });
-          }
+          } */
         });
       } else {
         return false;
       }
+    }
+
+    if (styleText.includes('background-image')) {
+      console.warn('Defined container has styles that utilizes a background-image. ' +
+       'Unless your browser settings allow for you to print background images.');
+      console.dir(styleText.indexOf('background-image'));
     }
 
     // Creating Print Window
