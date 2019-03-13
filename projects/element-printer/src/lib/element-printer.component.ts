@@ -1,5 +1,4 @@
 import { Component, OnInit, Output, EventEmitter, Input, Renderer2 } from '@angular/core';
-import { style } from '@angular/animations';
 
 @Component({
 // tslint:disable-next-line: component-selector
@@ -69,7 +68,8 @@ export class ElementPrinterComponent implements OnInit {
 
     if (styleText.includes('background-image')) {
       console.warn('Defined container has styles that utilizes a background-image. ' +
-       'Unless your browser settings allow for you to print background images.');
+       'Unless your browser settings allow for you to print background images. ' +
+       'View guide here: https://github.com/Soundwubz/Element-Printer/blob/master/PRINTGUIDE.md');
     }
 
     // Creating Print Window
