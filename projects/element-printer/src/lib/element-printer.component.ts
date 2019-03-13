@@ -32,6 +32,8 @@ export class ElementPrinterComponent implements OnInit {
     });
     if (this.enableDebug) {
       console.dir(container);
+      console.log('computed styles: ');
+      console.dir(window.getComputedStyle(container));
       console.log('classes: ');
       console.dir(classes);
       console.log('document.styleSheets: ');
