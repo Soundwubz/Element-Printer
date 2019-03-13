@@ -10,4 +10,6 @@ This Angular package's purpose is to take specified HTML elements along with its
 
 Run `npm run start_demo` to view in web browser at localhost:4200
 
+## Running into issues?
 
+Check the [print guide](https://github.com/Soundwubz/Element-Printer/blob/master/PRINTGUIDE.md) to see if your issue has an easy solution. If your problem cannot be solved there, feel free to open an issue.
