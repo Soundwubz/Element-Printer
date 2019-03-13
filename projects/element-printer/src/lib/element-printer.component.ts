@@ -35,13 +35,15 @@ export class ElementPrinterComponent implements OnInit {
       console.dir(container);
       console.log('classes: ');
       console.dir(classes);
+      console.log('document.styleSheets: ');
+      console.dir(document.styleSheets);
     }
     let styleText;
     this.slice(document.styleSheets).filter(filterSheets);
 
     function filterSheets(item) {
       if (item.href === null) {
-        const rules = sudo.slice(item.rules);
+        const rules = sudo.slice(item.cssRules);
         return rules.filter(filterRules);
       } else {
         return false;
@@ -58,20 +60,7 @@ export class ElementPrinterComponent implements OnInit {
               styleText = item.cssText;
             }
             return true;
-          } /* else { // check if children match selector text
-            childElements.forEach(child => {
-              if (item.selectorText.includes(child.className)) { // Go through classes and get styles;
-                if (styleText !== undefined) {
-                  styleText = styleText + ' ' + item.cssText;
-                } else {
-                  styleText = item.cssText;
-                }
-                return true;
-              } else {
-                return false;
-              }
-            });
-          } */
+          }
         });
       } else {
         return false;
