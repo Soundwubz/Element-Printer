@@ -18,54 +18,45 @@ export class ElementPrinterComponent implements OnInit {
   slice = Function.call.bind(Array.prototype.slice);
 
   print() {
-    const sudo = this;
     const container = this.renderer.selectRootElement('#' + this.containerToPrint, true);
-    const childElements = this.slice(container.children);
     const classes = [];
+    let styleText = '#' + this.containerToPrint + ' { margin: 0 auto; }';
     // tslint:disable-next-line: deprecation
     this.slice(document.all).forEach(x => {
       if (container.contains(x)) { // gets each element within the container; use this to get the class names and styles
-        x.classList.forEach(y => {
-          classes.push(y);
-        });
+        let selector = '';
+        if (x.classList.length > 1) {
+          // get all of the classes to be used as selectors
+          x.classList.forEach(function(cl, i) {
+            i = i + 1;
+            if (i === x.classList.length) {
+              selector = selector + ' .' + cl;
+            } else {
+              selector = selector + ' .' + cl + ', ';
+            }
+          });
+        } else if (x.classList.length === 1) {
+          selector = '.' + x.classList[0];
+        } else {
+          selector = x.localName;
+        }
+        const cssText = window.getComputedStyle(x).cssText;
+        styleText = styleText + ' ' + selector + ' { ' + cssText + ' } ';
       }
     });
     if (this.enableDebug) {
       console.dir(container);
+      /*
+        Switch over to getting the computed styles of each element.
+        Getting an element's computed styles is fairly simple
+        Programatically getting all of the elements within the container is the difficult part
+      */
       console.log('computed styles: ');
       console.dir(window.getComputedStyle(container));
       console.log('classes: ');
       console.dir(classes);
       console.log('document.styleSheets: ');
       console.dir(document.styleSheets);
-    }
-    let styleText;
-    this.slice(document.styleSheets).filter(filterSheets);
-
-    function filterSheets(item) {
-      if (item.href === null) {
-        const rules = sudo.slice(item.cssRules);
-        return rules.filter(filterRules);
-      } else {
-        return false;
-      }
-    }
-
-    function filterRules(item) {
-      if (item.selectorText !== undefined) {
-        classes.forEach(x => {
-          if (item.selectorText.includes(x)) { // Go through classes and get styles;
-            if (styleText !== undefined) {
-              styleText = styleText + ' ' + item.cssText;
-            } else {
-              styleText = item.cssText;
-            }
-            return true;
-          }
-        });
-      } else {
-        return false;
-      }
     }
 
     if (styleText.includes('background-image')) {
