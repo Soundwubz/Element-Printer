@@ -17,10 +17,26 @@
 
 .test-header{
     font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
-    h1{
-        color: rgb(0, 153, 255);
-    }
-    p{
-        color: rgb(255, 187, 0);
+}
+
+@media only screen and (min-width: 701px) {
+    .test-header{
+        h1{
+            color: rgb(0, 153, 255);
+        }
+        p{
+            color: rgb(255, 187, 0);
+        }
     }
 }
+
+@media only screen and (max-width: 700px) {
+    .test-header{
+        h1{
+            color: rgb(255, 187, 0);
+        }
+        p{
+            color:rgb(0, 153, 255);
+        }
+    }
+} 

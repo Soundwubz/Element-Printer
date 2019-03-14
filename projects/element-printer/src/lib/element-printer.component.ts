@@ -21,6 +21,7 @@ export class ElementPrinterComponent implements OnInit {
     const container = this.renderer.selectRootElement('#' + this.containerToPrint, true);
     const classes = [];
     let styleText = '#' + this.containerToPrint + ' { margin: 0 auto; }';
+    let mediaText = '';
     // tslint:disable-next-line: deprecation
     this.slice(document.all).forEach(x => {
       if (container.contains(x)) { // gets each element within the container; use this to get the class names and styles
@@ -42,6 +43,19 @@ export class ElementPrinterComponent implements OnInit {
         }
         const cssText = window.getComputedStyle(x).cssText;
         styleText = styleText + ' ' + selector + ' { ' + cssText + ' } ';
+      }
+    });
+    this.slice(document.styleSheets).forEach(x => {
+      if (x.href === null) {
+        if (x.cssRules !== undefined) {
+          this.slice(x.cssRules).forEach(y => {
+            if (y.media !== undefined) {
+              if (y.media.length > 0) {
+                mediaText = mediaText + y.cssText + ' ';
+              }
+            }
+          });
+        }
       }
     });
     if (this.enableDebug) {
@@ -70,6 +84,8 @@ export class ElementPrinterComponent implements OnInit {
     win.document.write('<html><head>');
     win.document.write('<title>Element Printer</title>');
     win.document.write('<style>');
+    // Media styles go here
+    win.document.write(mediaText);
     // Style goes here
     win.document.write(styleText);
     win.document.write('</style>');
