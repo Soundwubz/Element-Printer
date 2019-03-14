@@ -51,7 +51,12 @@ export class ElementPrinterComponent implements OnInit {
           this.slice(x.cssRules).forEach(y => {
             if (y.media !== undefined) {
               if (y.media.length > 0) {
-                mediaText = mediaText + y.cssText + ' ';
+                /* mediaText = mediaText + y.cssText + ' '; */
+                let mediaStyles = '';
+                this.slice(y.cssRules).forEach(z => {
+                  mediaStyles = mediaStyles + ' ' + z.cssText;
+                });
+                mediaText = mediaText + ' <style media="' + y.conditionText + '"> ' + mediaStyles + ' </style> ';
               }
             }
           });
@@ -84,11 +89,11 @@ export class ElementPrinterComponent implements OnInit {
     win.document.write('<html><head>');
     win.document.write('<title>Element Printer</title>');
     win.document.write('<style>');
-    // Media styles go here
-    win.document.write(mediaText);
     // Style goes here
     win.document.write(styleText);
-    win.document.write('</style>');
+    win.document.write('</style>')
+    // Media styles go here
+    win.document.write(mediaText);
     win.document.write('</head><body style="margin: 0 auto;">');
     win.document.write(container.outerHTML);
     win.document.write('</body></html>');
