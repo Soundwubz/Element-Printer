@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter, Input, Renderer2 } from '@angular/core';
+import { Component, OnInit, Input, Renderer2 } from '@angular/core';
 
 @Component({
 // tslint:disable-next-line: component-selector
@@ -13,6 +13,7 @@ export class ElementPrinterComponent implements OnInit {
   ) { }
 
   @Input() containerToPrint: string;
+  @Input() containerComponent;
   @Input() enableDebug = false;
 
   slice = Function.call.bind(Array.prototype.slice);
@@ -63,20 +64,6 @@ export class ElementPrinterComponent implements OnInit {
         }
       }
     });
-    if (this.enableDebug) {
-      console.dir(container);
-      /*
-        Switch over to getting the computed styles of each element.
-        Getting an element's computed styles is fairly simple
-        Programatically getting all of the elements within the container is the difficult part
-      */
-      console.log('computed styles: ');
-      console.dir(window.getComputedStyle(container));
-      console.log('classes: ');
-      console.dir(classes);
-      console.log('document.styleSheets: ');
-      console.dir(document.styleSheets);
-    }
 
     if (styleText.includes('background-image')) {
       console.warn('Defined container has styles that utilizes a background-image. ' +
@@ -84,18 +71,36 @@ export class ElementPrinterComponent implements OnInit {
        'View guide here: https://github.com/Soundwubz/Element-Printer/blob/master/PRINTGUIDE.md');
     }
 
+    const html = container.outerHTML.replace(/\s+/g,' ').trim();
+
+    if (this.enableDebug) {
+      console.dir(container);
+      console.log('computed styles: ');
+      console.dir(window.getComputedStyle(container));
+      console.log('classes: ');
+      console.dir(classes);
+      console.log('document.styleSheets: ');
+      console.dir(document.styleSheets);
+      if (this.containerComponent !== null || this.containerComponent !== undefined) {
+        console.dir(this.containerComponent);
+      }
+    }
+
     // Creating Print Window
-    const win = window.open('', 'Element Printer', 'height=700,width=700');
+    const win = window.open('', 'Element Printer', 'height=1000,width=1000');
     win.document.write('<html><head>');
     win.document.write('<title>Element Printer</title>');
     win.document.write('<style>');
     // Style goes here
     win.document.write(styleText);
-    win.document.write('</style>')
+    win.document.write('</style>');
     // Media styles go here
     win.document.write(mediaText);
     win.document.write('</head><body style="margin: 0 auto;">');
-    win.document.write(container.outerHTML);
+    win.document.write(html);
+    //
+    // The outer HTML string is broken due to the obsurd amounts of ""
+    //
     win.document.write('</body></html>');
     win.document.close();
     win.print();
